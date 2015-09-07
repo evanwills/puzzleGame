@@ -5,7 +5,7 @@
  * @interface puzzleGame abstract factory method
  *
  */
-interface puzzleGame
+interface puzzleGameInterface
 {
 	public function __construct( $X , $Y , $mode );
 
@@ -23,17 +23,17 @@ interface puzzleGame
 /**
  *
  */
-interface puzzlePiece
+interface puzzlePieceInterface
 {
-	public function isConnected();
+//	public function isConnected();
 
 	public function hasBridge( $face );
 
 	public function getOrientation();
 
-	public function rotate();
+	public function rotate( $steps = 1 );
 
-	public function rotateBack();
+	public function rotateBack($steps = 1 );
 
 	public function getShape();
 
@@ -49,7 +49,9 @@ interface puzzlePiece
 /**
  *
  */
-interface puzzlePieceVisitorInterface implements puzzlePiece
+interface puzzlePieceObserverInterface implements puzzlePieceInterface
 {
 	public function setPuzzlePiece( puzzlePiece $puzzle );
+
+	public function getRequiredBridges();
 }
