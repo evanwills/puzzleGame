@@ -25,7 +25,6 @@ class blankPuzzlePiece implements puzzlePieceInterface
 		}
 	}
 
-
 	static public function getPiece( $shape , $faces ) {
 		$pieceType = get_class($this);
 		if( $shape = self::shapeIsValid($shape) ) {
@@ -53,20 +52,25 @@ class blankPuzzlePiece implements puzzlePieceInterface
 		}
 	}
 
-
+	public function getBridges() { return $this->bridges; }
+	public function getCode() { return $this->code; }
 	public function getOrientation() { return 0; }
-
 	public function getPieceType() { return get_class($this); }
 	public function getShape() { return $this->shape; }
 
-	public function getCode() { return $this->code; }
+	public function copyMe() { return $this; }
+
+	public function connectToNeighbours( $neighbourBridges ) { return true; }
 
 	public function hasBridge( $face ) { return false; }
 
 	public function rotate( $steps = 1 ) { return 0; }
 	public function rotateBack( $steps = 1 ) { return 0; }
 	public function rotate180() { return 0; }
-	public function copyMe() { return $this; }
+
+// END: public methods
+// ==============================================
+// START: protected methods
 
 	static protected function shapeIsValid($shape) {
 		if( is_string($shape) ) {
