@@ -68,6 +68,9 @@ class blankPuzzlePiece implements puzzlePieceInterface
 	public function rotateBack( $steps = 1 ) { return 0; }
 	public function rotate180() { return 0; }
 
+	public function mirrorH() {}
+	public function mirrorV() {}
+
 // END: public methods
 // ==============================================
 // START: protected methods
