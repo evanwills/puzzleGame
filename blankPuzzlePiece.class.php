@@ -26,18 +26,20 @@ class blankPuzzlePiece implements puzzlePieceInterface
 	}
 
 
-	static public function getBlankPiece( $shape , $faces ) {
+	static public function getPiece( $shape , $faces ) {
+		$pieceType = get_class($this);
 		if( $shape = self::shapeIsValid($shape) ) {
 			if( !isset(self::$singleton[$shape]) ) {
 				if( $faces = self::facesIsValid($faces) ) {
-					self::$singleton[$shape] = new blankPuzzlePiece($shape , $faces );
+					$pieceType = get_class(self);
+					self::$singleton[$shape] = new $pieceType($shape , $faces );
 				} else {
 					if( !is_int($faces) ) {
 						$suffix = gettype($faces);
 					} else {
 						$suffix = $faces;
 					}
-					throw new exception('blankPuzzlePiece::getBlankPiece() expects second parameter $faces to be an integer greater than 2. '.$suffix.' given');
+					throw new exception($pieceType.'::getBlankPiece() expects second parameter $faces to be an integer greater than 2. '.$suffix.' given');
 				}
 			}
 			return self::$singleton[$shape];
@@ -47,34 +49,26 @@ class blankPuzzlePiece implements puzzlePieceInterface
 			} else {
 				$suffix = $shape;
 			}
-			throw new exception('blankPuzzlePiece::getBlankPiece() expects first parameter $shape to be a a valid shape name. '.$suffix.' given');
+			throw new exception($pieceType.'::getBlankPiece() expects first parameter $shape to be a a valid shape name. '.$suffix.' given');
 		}
 	}
 
 
-	public function isConnected() { return true; }
-
-	public function hasBridge( $face ) { return false; }
-
 	public function getOrientation() { return 0; }
 
-	public function rotate( $steps = 1 ) { return 0; }
-
-	public function rotateBack($steps = 1 ) { return 0; }
-
+	public function getPieceType() { return get_class($this); }
 	public function getShape() { return $this->shape; }
 
 	public function getCode() { return $this->code; }
 
+	public function hasBridge( $face ) { return false; }
+
+	public function rotate( $steps = 1 ) { return 0; }
+	public function rotateBack( $steps = 1 ) { return 0; }
+	public function rotate180() { return 0; }
 	public function copyMe() { return $this; }
 
-	static public function getBridgePatterns() {
-		$output = array( array( 'key' => '0' , 'bridgeCount' => 0 , 'bridges' => array() , 'mirror' => false ) );
-
-	}
-
 	static protected function shapeIsValid($shape) {
-
 		if( is_string($shape) ) {
 			$shape = trim(strtolower($shape));
 			if( strlen($shape) > 4 && ( $shape === 'triangle' || $shape === 'square' || substr($shape,-4,4)  === 'agon' ) ) {
@@ -83,6 +77,7 @@ class blankPuzzlePiece implements puzzlePieceInterface
 		}
 		return false;
 	}
+
 	static protected function facesIsValid($faces) {
 		if( is_int($faces) && $faces > 2 ) {
 			return true;
@@ -99,6 +94,5 @@ class nullPuzzlePiece extends blankPuzzlePiece  {
 	public function hasBridge( $face ) { return null; }
 	static public function getBridgePatterns() {
 		$output = array( array( 'key' => 'N' , 'bridgeCount' => 0 , 'bridges' => array() , 'mirror' => false ) );
-
 	}
 }
