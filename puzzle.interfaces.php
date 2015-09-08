@@ -27,21 +27,31 @@ interface puzzlePieceInterface
 {
 //	public function isConnected();
 
-	public function hasBridge( $face );
+	public function getBridges()
+
+	public function getCode();
 
 	public function getOrientation();
+
+	public function getPieceType();
+
+	public function getShape();
+
+	public function hasBridge( $face );
 
 	public function rotate( $steps = 1 );
 
 	public function rotateBack($steps = 1 );
 
-	public function getShape();
-
-	public function getCode();
+	public function rotate180();
 
 	public function copyMe();
 
-	static public function getBridgePatterns();
+	public function mirrorH();
+
+	public function mirrorV();
+
+	public function connectToNeighbours( $neighbourBridges );
 }
 
 
