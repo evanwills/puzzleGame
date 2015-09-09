@@ -8,10 +8,13 @@
  */
 class puzzlePieceObserver implements puzzlePieceObserverInterface
 {
+	static protected $traverse = true;
 	protected $piece = null;
 	protected $neighbours = array();
 	protected $faceCount = 0;
 	protected $boundary = false;
+	protected $x = -1;
+	protected $y = -1;
 
 	static protected $traverse = true;
 
@@ -19,10 +22,11 @@ class puzzlePieceObserver implements puzzlePieceObserverInterface
 		$this->piece = $piece;
 		$this->faceCount = $this->piece->getFaceCount();
 		$shape = $this->piece->getShape();
-		if( !is_bool($boundary) ) {
-			throw new exception('puzzlePieceObserver::__construct() expects thrid parameter $boundary to be boolean. '.gettype($boundary).' given.');
-		}
-		$this->boundary = $boundary;
+//		if( !is_bool($boundary) ) {
+
+//			throw new exception('puzzlePieceObserver::__construct() expects thrid parameter $boundary to be boolean. '.gettype($boundary).' given.');
+//		}
+//		$this->boundary = $boundary;
 
 		$suffix = '';
 		if( !is_array($neighbours) ) {
@@ -86,6 +90,8 @@ class puzzlePieceObserver implements puzzlePieceObserverInterface
 	public function hasBridge( $face ) { return $this->piece->hasBridge($face); }
 
 	public function getOrientation() { return $this->piece->getOrientation(); }
+	
+	public function getPieceType() { return get_class($this->piece); }
 
 	public function rotate( $steps = 1 ) { return $this->piece->rotate($steps); }
 
@@ -96,15 +102,43 @@ class puzzlePieceObserver implements puzzlePieceObserverInterface
 	public function getCode() { return $this->piece->getCode(); }
 
 	public function isBoundary() { return $this->boundary; }
+	
+	public function getX() { return $this->X; }
+	public function getY() { return $this->Y; }
+	public function getY() { return $this->Y; }
+	public function getXYstr() { return $this->X.','.$this->Y; }
 
 	public function getNeighbourObserver( $face ) {
-		if( is_int($face) && self::$traverse === true && isset($this->neighbours[$face] && get_class($this->neighbours[$a]) === get_class($this)) ) {
+		if( is_int($face) && isset($this->neighbours[$face] && get_class($this->neighbours[$a]) === get_class($this)) ) {
 			return $this->neighbours[$a];
 		}
 		return false;
 	}
+	
+	public function getPieceClone() {
+		return $this->piece->clone();
+	}
 
 	static public function blockTraversal() {
 		self::$traverse = false;
+	}
+	
+	protected function setNeighbourObserver( puzzlePieceObserver $piece , $face ) {
+		if( is_int($face) && isset($this->neighbours[$face]) && get_class($this->neighbours[$face]) === 'nullPuzzlePiece' ) {
+			$this->neighbours[$face] = $piece;
+		}
+	}
+	
+	public function setXY( $x , $y ) {
+		if( is_int($x) && $x >= 0 && $this->X === -1 ) {
+			$this->X = $x;
+		} else {
+			throw new exception(get_class($this).'::setXY() expects first parameter $X to be an integer greater than or equal zero.');
+		}
+		if( is_int($y) && $y >= 0 && $this->Y === -1 ) {
+			$this->Y = $y;
+		} else {
+			throw new exception(get_class($this).'::setXY() expects second parameter $Y to be an integer greater than or equal zero.');
+		}
 	}
 }
