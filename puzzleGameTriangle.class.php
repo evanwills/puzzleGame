@@ -20,6 +20,9 @@ class puzzleGameTriangle implements puzzleGameInterface {
 		)
 	);
 
+	private $mirrorH = array(array(1,3));
+	private $mirrorV = array(array(0,2));
+
 	private $faceCount = 3;
 	private $shape = 'triangle';
 

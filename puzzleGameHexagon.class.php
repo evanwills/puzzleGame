@@ -32,6 +32,12 @@ class puzzleGameHexagon implements puzzleGameInterface {
 		)
 	);
 
+
+	private $mirrorH = array(array(1,5),array(2,4));
+	private $mirrorV = array(array(0,3),array(1,2),array(4,5));
+
+
+
 	private $faceCount = 6;
 	private $shape = 'hexagon';
 

@@ -24,6 +24,9 @@ class puzzleGameSquares implements puzzleGameInterface {
 		)
 	);
 
+	protected $mirrorH = array(array(1,3));
+	protected $mirrorV =  array(array(0,2));
+	
 	private $faceCount = 4;
 	private $shape = 'square';
 

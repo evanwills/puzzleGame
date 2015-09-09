@@ -56,6 +56,10 @@ class puzzleGameOctagon implements puzzleGameInterface {
 		)
 	);
 
+
+	private $mirrorH = array(array(1,7),array(3,5));
+	private $mirrorV = array(array(1,3),array(5,7));
+
 	private $faceCount = 8;
 	private $shape = 'octagon';
 
