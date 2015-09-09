@@ -12,7 +12,7 @@ class puzzlePiecePattern {
 	protected $mirrorObj = null;
 	protected $mirrored = false;
 
-	public function construct( $code , $shape , $mirrorable , $bridges ) {
+	public function construct( $code , $mirrorable , $bridges ) {
 
 		$suffix = '';
 		$msg = 'puzzlePiecePattern::__construct() expects '.;
@@ -20,16 +20,6 @@ class puzzlePiecePattern {
 		// ======================================
 		if( !is_string($shape) ) {
 			$suffix = gettype($shape);
-		}
-
-		$shape = trim(strtolower($shape));
-		if( strlen($shape) > 4 && ( $shape === 'triangle' || $shape === 'square' || substr($shape,-4,4)  === 'agon' ) ) {
-			$this->shape = $shape;
-		} else {
-			$suffix = '"'.$shape.'"';
-		}
-		if( $suffix !== '' ) {
-			throw new exception($msg.'second parameter $shape to be a valid shape name. '.$suffix.' given');
 		}
 
 		// ======================================
@@ -40,11 +30,15 @@ class puzzlePiecePattern {
 			$suffix = 'empty array';
 		} elseif( count($bridges) < 3 ) {
 			$suffix = 'array with less than 3 items'
+		} elseif( count($bridges) > $this->maxSides ) {
+			$suffix = 'array with more than '.$this->maxSides.' items';
 		}
 		if( $suffix !== '' ) {
 			throw new exception($msg.'fourth parameter $bridges to be an array with between 3 and '.$this->maxSides.'. '.$suffix.' given');
 		}
 		$this->faceCount = count($bridges);
+		$this->shape = $this->facesShape[$this->faceCount];
+
 		for( $a = 0 ; $a < $this->faceCount ; $a += 1 ) {
 			if( is_bool($) ) {
 				$this->bridges[] = $bridges[$a];
@@ -77,8 +71,6 @@ class puzzlePiecePattern {
 		 }
 
 		// ======================================
-
-		$this->shape = $this->facesShape[$this->faceCount];
 	}
 
 	public function isMirrorable() { return $this->mirrorable; }
