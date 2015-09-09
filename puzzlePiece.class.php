@@ -1,7 +1,8 @@
 <?php
 
-require_once(dirname(__FILE__).'/puzzleGame.interface.php');
-require_once(dirname(__FILE__).'/puzzleGame.abstract.class.php');
+$here = dirname(__FILE__).'/';
+require_once($here.'/puzzle.interface.php');
+require_once($here.'/puzzlePieceMirror.class.php');
 
 
 
@@ -19,14 +20,16 @@ class puzzlePiece implements puzzlePieceInterface
 	protected $code = '';
 
 	protected $mirrored = false;
+	protected $mirrorObj = null;
 
-	public function __construct( puzzlePiecePattern $piece ) {
+	public function __construct( puzzlePiecePattern $piece , puzzlePieceMirror $mirror ) {
 		$this->bridges = $piece->getBridges();
 		$this->bridgeCount = $piece->getBridgeCount();
 		$this->code = $piece->getCode();
 		$this->faceCount = $piece->getFaceCount();
 		$this->mirrored = $piece->isMirrored();
 		$this->shape = $piece->getShape();
+		$this->mirrorObje = $mirror;
 	}
 
 	public function getBridges() { return $this->bridges; }
@@ -130,13 +133,11 @@ class puzzlePiece implements puzzlePieceInterface
 	}
 
 	public function mirrorH() {
-		$mirrorfunc = 'mirrorH'.$this->shape;
-		$this->mirrorInner($this->$mirrorfunc());
+		$this->bridges = $this->mirrorObj->mirrorH($this->bridges);
 	}
 
 	public function mirrorV() {
-		$mirrorfunc = 'mirrorV'.$this->shape;
-		$this->mirrorInner($this->$mirrorfunc());
+		$this->bridges = $this->mirrorObj->mirrorY($this->bridges);
 	}
 
 // END: public functions
@@ -150,26 +151,5 @@ class puzzlePiece implements puzzlePieceInterface
 			$this->orientation += 1;
 		}
 	}
-
-	protected function mirrorInner( $swapsies ) {
-		for( $a = 0 ; $a < count($swapsies) ; $a += 1 ) {
-			$first = $this->bridges[$swapsies[0]];
-			$second = $this->bridges[$swapsies[1]];
-			$this->bridges[$swapsies[0]] = $second;
-			$this->bridges[$swapsies[1]] = $first;
-		}
-		$this->mirrored = !$this->mirrored;
-	}
-
-	protected function mirrorHsquare() { return array(array(1,3)); }
-	protected function mirrorVsquare() { return array(array(0,2)); }
-
-
-	protected function mirrorHhexagon() { return array(array(1,5),array(2,4)); }
-	protected function mirrorVhexagon() { return array(array(0,3),array(1,2),array(4,5)); }
-
-
-	protected function mirrorHoctagon() { return array(array(1,7),array(3,5)); }
-	protected function mirrorVoctagon() { return array(array(1,3),array(5,7)); }
 
 }
