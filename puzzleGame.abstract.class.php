@@ -1,9 +1,9 @@
 <?php
 
 $here = dirname(__FILE__).'/';
-require_once($here.'puzzleGame.interface.php');
+require_once($here.'puzzle.interfaces.php');
 require_once($here.'puzzlePiece.class.php');
-require_once($here.'/puzzlePieceMirror.class.php');
+require_once($here.'puzzlePieceMirror.singleton.class.php');
 require_once($here.'blankPuzzlePiece.class.php');
 require_once($here.'puzzlePiece.observer.class.php');
 require_once($here.'puzzlePiece.factory.class.php');
@@ -17,7 +17,7 @@ abstract class abstractPuzzleGame implements puzzleGame {
 	 * @var int $pieceCount number of non blank pieces.
 	 */
 	protected $pieceCount = 0;
-	protected $mode 'random';
+	protected $mode = 'random';
 	protected $X = 2;
 	protected $Y = 2;
 	protected $blankPiece = null;
@@ -76,7 +76,7 @@ abstract class abstractPuzzleGame implements puzzleGame {
 			switch($tmp) {
 				case 'random':
 				case 'adjacent':
-				case 'linear'
+				case 'linear':
 					$tmp = ucfirst($tmp);
 					$this->pieceAllocationMode = "addPuzzlePieces{$tmp}";
 					break;
@@ -110,7 +110,7 @@ abstract class abstractPuzzleGame implements puzzleGame {
 			}
 		} elseif( is_scalar($seed) && !empty($seed) ) {
 			settyp($seed,'string');
-			$this->seed = $seed
+			$this->seed = $seed;
 		} else {
 			$suffix = '';
 			if( !is_scalar($seed) ) {
@@ -144,14 +144,14 @@ abstract class abstractPuzzleGame implements puzzleGame {
 	}
 
 
-	abstract private function generatePuzzle();
+	abstract protected function generatePuzzle();
 
 
 	protected function addPuzzlePiecesRandomXY() {
 		while( !empty($this->waitingObservers) ) {
 			$key = mt_rand(0,count($this->waitingObservers) - 1);
 			$observer = $this->waitingObservers[$key];
-			$this->setRandomPuzzlePiece( $observer )
+			$this->setRandomPuzzlePiece( $observer );
 			$this->removeWaitingObserver( $observer->getXYstr() );
 		}
 	}
@@ -159,7 +159,7 @@ abstract class abstractPuzzleGame implements puzzleGame {
 	protected function addPuzzlePiecesLinear() {
 		for( $y = 0 ; $y < $this->Y ; $y += 1 ) {
 			for( $x = 0 ; $x < $this->X ; $x += 1 ) {
-				$this->setRandomPuzzlePiece( $this->pieces[$x][$y] )
+				$this->setRandomPuzzlePiece( $this->pieces[$x][$y] );
 			}
 		}
 	}
@@ -337,5 +337,4 @@ abstract class abstractPuzzleGame implements puzzleGame {
 			}
 		}
 	}
-	protected
 }
