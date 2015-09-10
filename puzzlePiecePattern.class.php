@@ -1,7 +1,7 @@
 <?php
 
 class puzzlePiecePattern {
-	protected $facesShape = array( 3 => 'triangle' , 4 => 'square' , 5 => 'pentagon' , 6 => 'hexagon' , 7 => 'septagon' , 8 'octagon' , 9 => 'nonagon' , 10 => 'decagon' );
+	protected $facesShape = array( 3 => 'triangle' , 4 => 'square' , 5 => 'pentagon' , 6 => 'hexagon' , 7 => 'septagon' , 8 => 'octagon' , 9 => 'nonagon' , 10 => 'decagon' );
 	protected $maxSides = 10;
 	protected $mirrorable = false;
 	protected $bridges = array();
@@ -15,7 +15,7 @@ class puzzlePiecePattern {
 	public function construct( $code , $mirrorable , $bridges ) {
 
 		$suffix = '';
-		$msg = 'puzzlePiecePattern::__construct() expects '.;
+		$msg = 'puzzlePiecePattern::__construct() expects ';
 
 		// ======================================
 		if( !is_string($shape) ) {
@@ -29,7 +29,7 @@ class puzzlePiecePattern {
 		} elseif( empty($bridges) ) {
 			$suffix = 'empty array';
 		} elseif( count($bridges) < 3 ) {
-			$suffix = 'array with less than 3 items'
+			$suffix = 'array with less than 3 items';
 		} elseif( count($bridges) > $this->maxSides ) {
 			$suffix = 'array with more than '.$this->maxSides.' items';
 		}
@@ -40,7 +40,7 @@ class puzzlePiecePattern {
 		$this->shape = $this->facesShape[$this->faceCount];
 
 		for( $a = 0 ; $a < $this->faceCount ; $a += 1 ) {
-			if( is_bool($) ) {
+			if( is_bool($bridges[$a]) ) {
 				$this->bridges[] = $bridges[$a];
 				if( $bridges[$a] === true ) {
 					$this->bridgeCount += 1;
@@ -60,7 +60,7 @@ class puzzlePiecePattern {
 		if( $suffix !== '' ) {
 			throw new exception($msg.'first parameter $code must be a single alphabetical character string. '.$suffix.' given');
 		}
-		$this->code = $this->faceCount.$code;
+		$this->code = $this->faceCount.'-'.$this->bridgeCount.$code;
 
 		// ======================================
 
@@ -81,9 +81,9 @@ class puzzlePiecePattern {
 	public function getBridgeCount() { return $this->bridgeCount; }
 	public function isMirrored() { return $this->mirrored; }
 
-	public function getMirror)() {
+	public function getMirror() {
 		if( $this->mirrorObj === null ) {
-			$this->mirrorObj => $this->clone();
+			$this->mirrorObj = $this->clone();
 		}
 		return $this->mirrorObj;
 	}
@@ -110,7 +110,7 @@ class puzzlePiecePattern {
 			for( $a = 0 ; $a < $this->faceCount ; $a += 1 ) {
 				if( $this->isUsableInner($neighbours,$bridges) ) {
 					if( $this->mirrorObj === null ) {
-						$this->mirrorObj => $this->clone();
+						$this->mirrorObj = $this->clone();
 					}
 					return $this->mirrorObj;
 				}
@@ -157,6 +157,6 @@ class puzzlePiecePattern {
 	protected function rotate( $bridges ) {
 		$old = array_pop($bridges);
 		array_unshift( $bridges , $old );
-		return $bridges
+		return $bridges;
 	}
 }
