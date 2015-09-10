@@ -32,10 +32,11 @@ class puzzlePieceMirror {
 					$suffix = $$var;
 				}
 				if( $suffix !== '' ) {
-					throw new exception('mirrorPuzzlePiece::getMirror() expects '.$which.' parameter $mirror'.$axis[$a].' to be an array with at least one child array.')
+					throw new exception('mirrorPuzzlePiece::getMirror() expects '.$which.' parameter $mirror'.$axis[$a].' to be an array with at least one child array.');
 				}
 				for( $b = 0 ; $b < count($$var) ; $b += 1 ) {
-					$item = {$item}[$b];
+					$tmp = $$var;
+					$item = $tmp[$b];
 					if( !is_array($item) ) {
 						$suffix = gettype($item).' given';
 					} elseif( count($item) !== 2 ) {
@@ -60,7 +61,7 @@ class puzzlePieceMirror {
 
 					}
 				}
-				$which = 'third'
+				$which = 'third';
 			}
 			$this->singletons[$faces] = new self( $mirrorX , $mirrorY );
 		}
@@ -71,7 +72,7 @@ class puzzlePieceMirror {
 		return $this->mirrorInner( $bridges, $this->mirrorX );
 	}
 
-	public function mirrorX( $bridges ) {
+	public function mirrorY( $bridges ) {
 		return $this->mirrorInner( $bridges, $this->mirrorY );
 	}
 
