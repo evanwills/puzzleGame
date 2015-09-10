@@ -2,7 +2,7 @@
 $here = dirname(__FILE__).'/';
 require_once($here.'puzzlePiecePattern.class.php');
 require_once($here.'puzzlePiece.observer.class.php');
-require_once($here.'genericPuzzlePiece.class.php');
+require_once($here.'PuzzlePiece.class.php');
 
 class puzzlePieceFactory {
 	private $shape = '';
@@ -36,7 +36,7 @@ class puzzlePieceFactory {
 		}
 
 		foreach( $bridgePatterns as $pattern ) {
-			if( !is_a($pattern,'puzzlePiecePattern') )
+			if( !is_a($pattern,'puzzlePiecePattern') ) {
 				throw new exception('puzzlePieceFactory::__construct() expects second parameter $bridgePatterns to be a three dimensional array where the key for each top level item must be an index greater than zero. '.$suffix.' given');
 			}
 			$faceCount = $pattern->getFaceCount();
