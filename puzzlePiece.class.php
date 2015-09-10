@@ -1,8 +1,8 @@
 <?php
 
 $here = dirname(__FILE__).'/';
-require_once($here.'/puzzle.interface.php');
-require_once($here.'/puzzlePieceMirror.class.php');
+require_once($here.'puzzle.interfaces.php');
+require_once($here.'puzzlePieceMirror.singleton.class.php');
 
 
 
@@ -19,65 +19,55 @@ class puzzlePiece implements puzzlePieceInterface
 
 	protected $code = '';
 
+	protected $oppositeFaces = array();
+
 	protected $mirrored = false;
 	protected $mirrorObj = null;
 
 	public function __construct( puzzlePiecePattern $piece , puzzlePieceMirror $mirror ) {
 		$this->bridges = $piece->getBridges();
 		$this->bridgeCount = $piece->getBridgeCount();
-		$this->code = $piece->getCode();
 		$this->faceCount = $piece->getFaceCount();
+		$this->code = $piece->getCode();
 		$this->mirrored = $piece->isMirrored();
 		$this->shape = $piece->getShape();
 		$this->mirrorObje = $mirror;
+
+		$half = $this->faceCount / 2;
+		for( $a = 0 ; $a < $this->faceCount ; $a += 1 ) {
+			if( $a < $half ) {
+				$b = $a + $half;
+			} else {
+				$b = $half - $a;
+			}
+			$this->oppositeFaces[$a] = $b;
+		}
 	}
 
 	public function getBridges() { return $this->bridges; }
 
 	public function getCode() { return $this->code; }
 
-	public function getOrientation() { return $this->orientation; }
+	public function getID() { return substr($this->shape,0,3).$this->bridgeCount.$this->code; }
 
 	public function getPieceType() { return get_class($this); }
 
 	public function getShape() { return $this->shape; }
 
-	public function connectToNeighbours( $neighbourBridges ) {
-		$suffix = '';
-		if( !is_array($neighbourBridges) ) {
-			$suffix = gettype($neighbourBridges);
-
-		} elseif( count($neighbourBridges) !== $this->faceCount ) {
-			$suffix = 'array with '.count($neighbourBridges).' items';
-		}
-		if( $suffix !== '' ) {
-			throw new exception('puzzlePiece::connectToNeighbours() expects parameter $neighbourBridges to be an array with '.$this->faceCount.' items. '.$suffix.' given');
-		}
-
-		for( $a = 0 ; $a < $this->faceCount ; $a += 1 ) {
-			if( !is_bool($neighbourBridges[$a]) && !is_null($neighbourBridges[$a]) ) {
-				throw new exception('puzzlePiece::connectToNeighbours() expectes parameter $neighbourBridges['.$a.'] to be boolean or NULL. '.gettype($neighbourBridges[$a]));
+	public function getOppositeFace($face) {
+		if( is_int($face) && isset($this->oppositeFaces[$face]) ) {
+			return $this->oppositeFaces[$face];
+		} else {
+			if( !is_int($face) ) {
+				$suffix = gettype($face).' given.';
+			} else {
+				$suffix = get_class($this).'::$oppositeFaces['.$face.'] is undefined.';
 			}
+			throw new exception(get_class($this).'::getOppositeFaces() expects parameter $faces to be an integer between 0 and '.($this->faceCount - 1 ).'. '.$suffix);
 		}
-
-		$output = false;
-		$limit = $this->faceCount;
-		while( $output === false && $limit > 0 ) {
-			$unbridged = $this->bridgeCount;
-			for( $a = 0 ; $a < $this->faceCount ; $a += 1 ) {
-				if( $neighbourBridges[$a] === $this->bridges[$a] && $neighbourBridges[$a] !== false ) {
-					$unbridged -= 1;
-				}
-			}
-			if( $unbridged < 1 ) {
-				return true;
-			}
-			$this->rotate();
-			$limit -= 1;
-		}
-
-		throw new exception('puzzlePiece::connectToNeighbours() cannot connect bridges to neighbours.');
 	}
+
+	public function getOrientation() { return $this->orientation; }
 
 	public function hasBridge( $face ) {
 		if( is_int($face) && $face >= 0 && $face <= $this->faceCount ) {
