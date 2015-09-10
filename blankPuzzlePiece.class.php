@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__).'/puzzleGame.interface.php');
+require_once(dirname(__FILE__).'/puzzle.interfaces.php');
 
 class blankPuzzlePiece implements puzzlePieceInterface
 {
@@ -9,7 +9,7 @@ class blankPuzzlePiece implements puzzlePieceInterface
 	protected $faceCount = 3;
 
 	protected $shape = '';
-	protected $code = '0';
+	protected $bridgeCount = '0';
 
 	static private $singleton = array();
 
@@ -54,6 +54,22 @@ class blankPuzzlePiece implements puzzlePieceInterface
 
 	public function getBridges() { return $this->bridges; }
 	public function getCode() { return $this->code; }
+
+	public function getID() { return substr($this->shape,0,3).'0'; }
+
+	public function getOppositeFace($face) {
+		if( is_int($face) && isset($this->oppositeFaces[$face]) ) {
+			return $this->oppositeFaces[$face];
+		} else {
+			if( !is_int($face) ) {
+				$suffix = gettype($face).' given.';
+			} else {
+				$suffix = get_class($this).'::$oppositeFaces['.$face.'] is undefined.';
+			}
+			throw new exception(get_class($this).'::getOppositeFaces() expects parameter $faces to be an integer between 0 and '.($this->faceCount - 1 ).'. '.$suffix);
+		}
+	}
+
 	public function getOrientation() { return 0; }
 	public function getPieceType() { return get_class($this); }
 	public function getShape() { return $this->shape; }
