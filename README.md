@@ -53,7 +53,7 @@ Using a seed
 By using a "deterministic random number generator" you only need to store very limited state. That state augments the initial seed to generate reproducible, dynamic, random puzzles
 Storage phase object:
 
-``` JSON
+``` json
 {
   seed: str,
   counter: int,
