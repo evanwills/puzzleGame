@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="250"
+   height="250"
+   viewBox="0 0 250 250"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="tile_square.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="0"
+     inkscape:zoom="5.6568543"
+     inkscape:cx="66.823251"
+     inkscape:cy="100.3912"
+     inkscape:document-units="px"
+     inkscape:current-layer="octagon"
+     showgrid="true"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     units="px"
+     objecttolerance="10000"
+     inkscape:window-width="2880"
+     inkscape:window-height="1590"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:snap-nodes="false"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3336"
+       spacingx="10"
+       spacingy="10"
+       color="#00af00"
+       opacity="0.125" />
+    <sodipodi:guide
+       position="125,150"
+       orientation="1,0"
+       id="guide3347" />
+    <sodipodi:guide
+       position="150,125"
+       orientation="0,1"
+       id="guide3349" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <style
+     type="text/css"
+     id="style4591">
+    .shape { fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1; }
+    .outer { fill:#000000; }
+    .inner { fill:#ffffff; }
+	.hide { display: none; }
+  </style>
+  <g
+     inkscape:label="Base Layer"
+     inkscape:groupmode="layer"
+     id="g4143"
+     transform="translate(0,-802.5)"
+     style="display:inline">
+    <circle
+       class="shape"
+       id="path3345"
+       cx="125"
+       cy="927.5"
+       r="125" />
+  </g>
+  <g
+     inkscape:label="dead End"
+     inkscape:groupmode="layer"
+     id="deadEnd"
+     transform="translate(0,-802.5)"
+     style="display:inline">
+    <g
+       class="hide"
+       id="squareSouthEast">
+      <rect
+         class="shape outer"
+         id="deadEndBridge"
+         width="20"
+         height="100"
+         x="115.5"
+         y="802.5" />
+      <circle
+         class="shape outer"
+         id="deadEndOuter"
+         cx="125"
+         cy="927.5"
+         r="41.7" />
+      <circle
+         class="shape inner"
+         id="deadEndInner"
+         cx="125"
+         cy="927.5"
+         r="21.7" />
+    </g>
+  </g>
+  <g
+     inkscape:label="Square Layer"
+     inkscape:groupmode="layer"
+     id="square"
+     transform="translate(0,-802.5)"
+     style="display:inline">
+    <g
+       class="hide"
+       id="g4314">
+      <circle
+         r="135"
+         class="shape outer"
+         cy="802.5"
+         cx="250"
+         id="squareSouthEastOuter" />
+      <circle
+         r="115"
+         class="shape inner"
+         cy="802.5"
+         cx="250"
+         id="squareSouthEastInner" />
+    </g>
+    <g
+       class="hide"
+       id="squarSouthWest">
+      <circle
+         r="135"
+         class="shape outer"
+         cy="802.5"
+         cx="0"
+         id="squareSouthWestOuter" />
+      <circle
+         r="115"
+         class="shape inner"
+         cy="802.5"
+         cx="0"
+         id="squareSouthWestInner" />
+    </g>
+    <g
+       class="hide"
+       id="squareNorthWest">
+      <circle
+         r="135"
+         class="shape outer"
+         cy="1052.5"
+         cx="0"
+         id="nortWestOuter" />
+      <circle
+         r="115"
+         class="shape inner"
+         cy="1052.5"
+         cx="0"
+         id="nortWestInner" />
+    </g>
+    <g
+       class="hide"
+       id="squareNorthEast">
+      <circle
+         r="135"
+         class="shape outer"
+         cy="1052.5"
+         cx="250"
+         id="squareNorthEastOuter" />
+      <circle
+         r="115"
+         class="shape inner"
+         cy="1052.5"
+         cx="250"
+         id="squareNorthEastInner" />
+    </g>
+    <rect
+       class="shape outer"
+       id="rect4330"
+       width="20"
+       height="250"
+       x="115"
+       y="802.5"
+       style="fill:#000000;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+  <g
+     inkscape:label="Octagon shape"
+     inkscape:groupmode="layer"
+     id="octagon"
+     transform="translate(0,-802.5)"
+     style="display:inline">
+    <!-- d="M 570,902.5 485.85786,925.63708 410,882.5 386.86292,798.35786 430,722.5 514.14214,699.36292 590,742.5 l 23.13708,84.14214 z" -->
+    <path
+       sodipodi:type="star"
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.5"
+       id="base"
+       sodipodi:sides="8"
+       sodipodi:cx="125"
+       sodipodi:cy="927.5"
+       sodipodi:r1="135.0781"
+       sodipodi:r2="2.9951253"
+       sodipodi:arg1="1.1803145"
+       sodipodi:arg2="1.5730136"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 176.41532,1052.4102 73.031274,1052.181 0.0898054,978.91532 0.31903456,875.53127 73.584682,802.58981 l 103.384048,0.22922 72.94146,73.26565 -0.22922,103.38405 z" />
+  </g>
+  <g
+     inkscape:label="Hexagon shape"
+     inkscape:groupmode="layer"
+     id="hexagon"
+     transform="translate(0,-802.5)"
+     style="display:none">
+    <!-- d="M 570,902.5 485.85786,925.63708 410,882.5 386.86292,798.35786 430,722.5 514.14214,699.36292 590,742.5 l 23.13708,84.14214 z" -->
+    <path
+       sodipodi:type="star"
+       class="shape"
+       id="path4167"
+       sodipodi:sides="6"
+       sodipodi:cx="125"
+       sodipodi:cy="932.5"
+       sodipodi:r1="150"
+       sodipodi:r2="150"
+       sodipodi:arg1="1.047518"
+       sodipodi:arg2="1.5711168"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 199.95837,1062.4278 -149.999994,-0.048 -74.958368,-129.92787 75.041623,-129.87977 149.999989,0.0481 74.95837,129.92784 z"
+       transform="matrix(0.96313539,0,0,0.96030151,4.6391714,31.752525)"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+</svg>
