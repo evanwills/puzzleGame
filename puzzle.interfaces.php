@@ -25,11 +25,12 @@ interface puzzleGameInterface
  */
 interface puzzlePieceInterface
 {
-//	public function isConnected();
 
-	public function getBridges()
+	public function getBridges();
 
 	public function getCode();
+
+	public function getOppositeFace($face);
 
 	public function getOrientation();
 
@@ -41,17 +42,15 @@ interface puzzlePieceInterface
 
 	public function rotate( $steps = 1 );
 
-	public function rotateBack($steps = 1 );
-
 	public function rotate180();
 
-	public function copyMe();
+	public function rotateBack($steps = 1 );
+
+//	public function copyMe();
 
 	public function mirrorH();
 
 	public function mirrorV();
-
-	public function connectToNeighbours( $neighbourBridges );
 }
 
 
@@ -59,8 +58,12 @@ interface puzzlePieceInterface
 /**
  *
  */
-interface puzzlePieceObserverInterface implements puzzlePieceInterface
+interface puzzlePieceObserverInterface
 {
+	public function isConnected();
+
+	public function connectToNeighbours();
+
 	public function setPuzzlePiece( puzzlePiece $puzzle );
 
 	public function getRequiredBridges();
