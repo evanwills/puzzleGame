@@ -54,32 +54,53 @@ class puzzlePiece implements puzzlePieceInterface
 
 	public function getShape() { return $this->shape; }
 
-	public function getOppositeFace($face) {
-		if( is_int($face) && isset($this->oppositeFaces[$face]) ) {
-			return $this->oppositeFaces[$face];
-		} else {
-			if( !is_int($face) ) {
-				$suffix = gettype($face).' given.';
-			} else {
-				$suffix = get_class($this).'::$oppositeFaces['.$face.'] is undefined.';
+	public function getOppositeFace( $face , $faceCount ) {
+		$originalFace = $face;
+		if( is_int($face) && is_int($faceCount) ) {
+			if( $this->faceCount !== $faceCount ) {
+				if( ($this->faceCount / 2) === $faceCount) {
+					$face *= 2;
+				} elseif( ($this->faceCount * 2) === $faceCount) {
+					$face /= 2;
+				} else {
+					throw new exception('puzzlePiece::getOppositeFace() cannot handle neighbours with '.$faceCount.' faces');
+				}
 			}
-			throw new exception(get_class($this).'::getOppositeFaces() expects parameter $faces to be an integer between 0 and '.($this->faceCount - 1 ).'. '.$suffix);
+			if( $face < $this->faceCount) {
+				$half = floor($this->faceCount / 2);
+				if( $face > $half ) {
+					$face -= $half;
+				} elseif( $face < $half ) {
+					$face += $half;
+				} else {
+					throw new exception('puzzlePiece::getOppositeFace() cannot find the neighbour for '.$originalFace);
+				}
+				return $face;
+			} else {
+				throw new exception('puzzlePiece::getOppositeFace() expects first parameter $face to be between 0 and '.$this->faceCount.'. '.$face.' (translated from '.$originalFace.') given.');
+			}
+		} else {
+			$arr = array( 'first' => 'face' , 'second' => 'faceCount' );
+			foreach( $arr = $key => $value ) {
+				if( !is_int($$value) ) {
+					$which = $key;
+					$var = $value;
+					$suffix = gettype($$value);
+				}
+			}
+			throw new exception('puzzlePiece::getOppositeFace() expects '.$which.' parameter $'.$var.' to be an integer. '.$suffix.' given.');
 		}
 	}
 
 	public function getOrientation() { return $this->orientation; }
 
-	public function hasBridge( $face ) {
-		if( is_int($face) && $face >= 0 && $face <= $this->faceCount ) {
-			return $this->bridges[$face];
-		} else {
-			if( is_int($face) ) {
-				$suffix = $face;
-			} else {
-				$suffix = gettype($face);
-			}
-			throw new exception(get_class($this).'::hasBridge() expects parameter $face to be an integer between 0 and '.$this->faceCount.'. '.$suffix.' given.');
+	public function hasBridge( $face , $faceCount ) {
+		try {
+			$face = $this->getOppositeFace($face,$faceCount);
+		} catch( exception $e ) {
+			throw new exception(str_replace('getOppositeFace','hasBridge'.$e->getMessage()));
 		}
+		return $this->bridges[$face];
 	}
 
 	public function rotate( $steps = 1 ) {

@@ -57,17 +57,41 @@ class blankPuzzlePiece implements puzzlePieceInterface
 
 	public function getID() { return substr($this->shape,0,3).'0'; }
 
-	public function getOppositeFace($face) {
-		if( is_int($face) && isset($this->oppositeFaces[$face]) ) {
-			return $this->oppositeFaces[$face];
-		} else {
-			if( !is_int($face) ) {
-				$suffix = gettype($face).' given.';
-			} else {
-				$suffix = get_class($this).'::$oppositeFaces['.$face.'] is undefined.';
+	public function getOppositeFace( $face , $faceCount ) {
+		$originalFace = $face;
+		if( is_int($face) && is_int($faceCount) ) {
+			if( $this->faceCount !== $faceCount ) {
+				if( ($this->faceCount / 2) === $faceCount) {
+					$face *= 2;
+				} elseif( ($this->faceCount * 2) === $faceCount) {
+					$face /= 2;
+				} else {
+					throw new exception(get_class($this).'::getOppositeFace() cannot handle neighbours with '.$faceCount.' faces');
+				}
 			}
-			throw new exception(get_class($this).'::getOppositeFaces() expects parameter $faces to be an integer between 0 and '.($this->faceCount - 1 ).'. '.$suffix);
-		}
+			if( $face < $this->faceCount) {
+				$half = floor($this->faceCount / 2);
+				if( $face > $half ) {
+					$face -= $half;
+				} elseif( $face < $half ) {
+					$face += $half;
+				} else {
+					throw new exception(get_class($this).'::getOppositeFace() cannot find the neighbour for '.$originalFace);
+				}
+				return $face;
+			} else {
+				throw new exception(get_class($this).'::getOppositeFace() expects first parameter $face to be between 0 and '.$this->faceCount.'. '.$face.' (translated from '.$originalFace.') given.');
+			}
+		} else {
+			$arr = array( 'first' => 'face' , 'second' => 'faceCount' );
+			foreach( $arr = $key => $value ) {
+				if( !is_int($$value) ) {
+					$which = $key;
+					$var = $value;
+					$suffix = gettype($$value);
+				}
+			}
+			throw new exception(get_class($this).'::getOppositeFace() expects '.$which.' parameter $'.$var.' to be an integer. '.$suffix.' given.');
 	}
 
 	public function getOrientation() { return 0; }
@@ -78,7 +102,7 @@ class blankPuzzlePiece implements puzzlePieceInterface
 
 	public function connectToNeighbours( $neighbourBridges ) { return true; }
 
-	public function hasBridge( $face ) { return false; }
+	public function hasBridge( $face , $faceCount ) { return false; }
 
 	public function rotate( $steps = 1 ) { return 0; }
 	public function rotateBack( $steps = 1 ) { return 0; }

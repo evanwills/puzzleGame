@@ -30,7 +30,7 @@ interface puzzlePieceInterface
 
 	public function getCode();
 
-	public function getOppositeFace($face);
+	public function getOppositeFace( $face , $faceCount );
 
 	public function getOrientation();
 
@@ -38,7 +38,7 @@ interface puzzlePieceInterface
 
 	public function getShape();
 
-	public function hasBridge( $face );
+	public function hasBridge( $face , $faceCount  );
 
 	public function rotate( $steps = 1 );
 
