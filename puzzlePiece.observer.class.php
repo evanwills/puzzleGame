@@ -63,13 +63,16 @@ class puzzlePieceObserver implements puzzlePieceInterface , puzzlePieceObserverI
 	public function getCode() { return $this->piece->getCode(); }
 
 	public function getNeighbourObserver( $face ) {
-		if( is_int($face) && isset($this->neighbours[$face]) && get_class($this->neighbours[$a]) === get_class($this) ) {
+		if( is_int($face) && isset($this->neighbours[$face]) ) {
 			return $this->neighbours[$a];
+		} else {
+			if( !is_int($face) ) {
+				$face = gettype($face);
+			throw new exception('puzzlePieceObserver::getNeighbourObserver() expects parameter $face to be an integer between 0 and '.$this->faceCount.'. '.$face.' given.');
 		}
-		return false;
 	}
 
-	public function getOppositeFace($face) { return $this->piece->getOppositeFace($face); }
+	public function getOppositeFace( $face , $faceCount ) { return $this->piece->getOppositeFace($face,$faceCount); }
 
 	public function getOrientation() { return $this->piece->getOrientation(); }
 
@@ -170,7 +173,7 @@ class puzzlePieceObserver implements puzzlePieceInterface , puzzlePieceObserverI
 
 	public function isBoundary() { return $this->boundary; }
 
-	public function hasBridge( $face ) { return $this->piece->hasBridge($face); }
+	public function hasBridge( $face , $faceCount ) { return $this->piece->hasBridge($face,$faceCount); }
 
 	public function rotate( $steps = 1 ) { return $this->piece->rotate($steps); }
 
@@ -183,6 +186,5 @@ class puzzlePieceObserver implements puzzlePieceInterface , puzzlePieceObserverI
 	public function mirrorV() { return $this->piece->mirrorV(); }
 
 	static public function StopBlockTraversal() { self::$traverse = false; }
-
 
 }
