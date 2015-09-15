@@ -62,6 +62,11 @@ function PuzzlePiece(pieceObj, tmpMirrorObj) {
 // ========================================================
 // START: public functions
 
+//	Object.defineProperty(this, 'Bridges' , {
+//		get: function () { return bridges; },
+//		set: function () { }
+//	});
+
 	this.getBridges = function () { return bridges; };
 
 	this.getCode = function () { return code; };
@@ -72,60 +77,60 @@ function PuzzlePiece(pieceObj, tmpMirrorObj) {
 
 	this.getShape = function () { return shape; };
 
-	this.getOppositeFace = function (tmpFace, tmpFaceCount) {
-		var originalFace = tmpFace;
-		if (typeof (tmpFace) === 'number' && tmpFace !== isNaN && typeof (tmpFaceCount)  === 'number' && tmpFaceCount !== isNaN) {
-			if (faceCount !== tmpFaceCount) {
-				if ((faceCount / 2) === tmpFaceCount) {
-					tmpFace *= 2;
-				} else if ((faceCount * 2) === tmpFaceCount) {
-					tmpFace /= 2;
+	this.getOppositeFace = function (inputFace, inputFaceCount) {
+		var originalFace = inputFace;
+		if (inputFace === parseInt(inputFace, 10) && inputFace >= 0 && inputFaceCount === parseInt(inputFaceCount, 10) && inputFaceCount >= 0) {
+			if (faceCount !== inputFaceCount) {
+				if ((faceCount / 2) === inputFaceCount) {
+					inputFace *= 2;
+				} else if ((faceCount * 2) === inputFaceCount) {
+					inputFace /= 2;
 				} else {
-					throw 'PuzzlePiece.getOppositeFace() cannot handle neighbours with ' + tmpFaceCount + ' faces';
+					throw 'PuzzlePiece.getOppositeFace() cannot handle neighbours with ' + inputFaceCount + ' faces';
 				}
 			}
-			if (tmpFace < faceCount) {
+			if (inputFace < faceCount) {
 				half = Math.floor(faceCount / 2);
-				if (tmpFace > half) {
-					tmpFace -= half;
-				} else if (tmpFace < half) {
-					tmpFace += half;
+				if (inputFace > half) {
+					inputFace -= half;
+				} else if (inputFace < half) {
+					inputFace += half;
 				} else {
 					throw 'puzzlePiece::getOppositeFace() cannot find the neighbour for ' + originalFace;
 				}
-				return tmpFace;
+				return inputFace;
 			} else {
-				throw 'puzzlePiece::getOppositeFace() expects first parameter $face to be between 0 and ' + faceCount + '. ' + tmpFace + ' (translated from ' + originalFace + ') given.';
+				throw 'puzzlePiece::getOppositeFace() expects first parameter $face to be between 0 and ' + faceCount + '. ' + inputFace + ' (translated from ' + originalFace + ') given.';
 			}
 		} else {
-			if (typeof (tmpFace) !== 'number') {
-				throw 'PuzzlePiece.getOppositeFace() expects first parameter \'tmpFace\' to be an number. ' + typeof (tmpFace) + ' given.';
+			if (typeof (inputFace) !== 'number') {
+				throw 'PuzzlePiece.getOppositeFace() expects first parameter \'tmpFace\' to be an number. ' + typeof (inputFace) + ' given.';
 			}
-			if (typeof (tmpFaceCount) !== 'number') {
-				throw 'PuzzlePiece.getOppositeFace() expects second parameter \'tmpFaceCount\' to be an number. ' + typeof (tmpFaceCount) + ' given.';
+			if (typeof (inputFaceCount) !== 'number') {
+				throw 'PuzzlePiece.getOppositeFace() expects second parameter \'tmpFaceCount\' to be an integer. ' + typeof (inputFaceCount) + ' given.';
 			}
 		}
 	};
 
 	this.getOrientation = function () { return orientation; };
 
-	this.hasBridge = function (tmpFace, tmpFaceCount) {
+	this.hasBridge = function (inputFace, inputFaceCount) {
 		try {
-			tmpFace = this.getOppositeFace(tmpFace, tmpFaceCount);
+			inputFace = this.getOppositeFace(inputFace, inputFaceCount);
 		} catch (e) {
 			console.error(e);//str_replace('getOppositeFace','hasBridge'.$e->getMessage()));
 		}
-		return bridges[tmpFace];
+		return bridges[inputFace];
 	};
 
-	this.rotate = function (tmpSteps) {
+	this.rotate = function (inputSteps) {
 		var end = faceCount - 1,
 			old = null;
-		if (tmpSteps === undefined) {
-			tmpSteps = 1;
+		if (inputSteps === undefined) {
+			inputSteps = 1;
 		}
-		if (tmpSteps === parseInt(tmpSteps, 10) && tmpSteps > 0) {
-			for (a = 0; a < tmpSteps; a += 1) {
+		if (inputSteps === parseInt(inputSteps, 10) && inputSteps > 0) {
+			for (a = 0; a < inputSteps; a += 1) {
 				incrementOrientation();
 				old = bridges.pop();
 				bridges.unshift(old);
@@ -134,13 +139,13 @@ function PuzzlePiece(pieceObj, tmpMirrorObj) {
 		return orientation;
 	};
 
-	this.rotateBack = function (tmpSteps) {
+	this.rotateBack = function (inputSteps) {
 		var old = null;
-		if (tmpSteps === undefined) {
-			tmpSteps = 1;
+		if (inputSteps === undefined) {
+			inputSteps = 1;
 		}
-		if (tmpSteps === parseInt(tmpSteps, 10) && tmpSteps > 0) {
-			for (a = 0; a < tmpSteps; a += 1) {
+		if (inputSteps === parseInt(inputSteps, 10) && inputSteps > 0) {
+			for (a = 0; a < inputSteps; a += 1) {
 				decrementOrientation();
 				old = bridges.shift();
 				bridges.push(old);
