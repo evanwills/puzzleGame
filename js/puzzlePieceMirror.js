@@ -66,39 +66,39 @@ function getMirror(inputFaces, inputMirrorX, inputMirrorY) {
 		$axis = array('X','Y');
 		$which = 'second';
 		for( $a = 0 ; $a < 2 ; $a += 1 ) {
-			$var = 'mirror'.$axis[$a];
+			$var = 'mirror' + $axis[$a];
 			$suffix = '';
 			if( !is_array($$var) ) {
 				$suffix = gettype($$var);
-			} elseif( count($$var) === 0 ) {
+			} else if( count($$var) === 0 ) {
 				$suffix = $$var;
 			}
 			if( $suffix !== '' ) {
-				throw new exception('mirrorPuzzlePiece::getMirror() expects '.$which.' parameter inputMirror'.axis[a].' to be an array with at least one child array.');
+				throw new exception('mirrorPuzzlePiece::getMirror() expects ' + $which + ' parameter inputMirror' + axis[a] + ' to be an array with at least one child array.');
 			}
 			for( $b = 0 ; $b < count($$var) ; $b += 1 ) {
 				$tmp = $$var;
 				$item = $tmp[$b];
 				if( !is_array($item) ) {
-					$suffix = gettype($item).' given';
-				} elseif( count($item) !== 2 ) {
+					$suffix = gettype($item) + ' given';
+				} else if( count($item) !== 2 ) {
 					$x = count($item);
-					$suffix = 'array has '.$x.' item';
+					$suffix = 'array has ' + $x + ' item';
 					if( $x > 1 ) {
-						$suffix .= 's';
+						$suffix = $suffix + 's';
 					}
 				}
 				if( $suffix !== '' ) {
-					throw new exception('mirrorPuzzlePiece::getMirror() expects '.$which.' parameter inputMirror'.$axis[$a].'['.$b.'] to be an array with at exactly 2 children. '.$suffix);
+					throw new exception('mirrorPuzzlePiece::getMirror() expects ' + $which + ' parameter inputMirror' + $axis[$a] + '[' + $b + '] to be an array with at exactly 2 children. ' + $suffix);
 				}
 				for( $c = 0 ; $c < 2 ; $c += 1 ) {
 					if( !is_int($item[$c]) ) {
 						$suffx = gettype($itme[$c]);
-					} elseif( $item[$c] < 0 ) {
+					} else if( $item[$c] < 0 ) {
 						$suffix = $item[$c];
 					}
 					if( $suffix !== '' ) {
-						throw new exception('mirrorPuzzlePiece::getMirror() expects '.$which.' parameter inputMirror'.$axis[$a].'['.$b.']['.$c.'] to be an integer equal to or greater than zero. '.$suffix.' given');
+						throw new exception('mirrorPuzzlePiece::getMirror() expects ' + $which + ' parameter inputMirror' + $axis[$a] + '[' + $b + '][' + $c + '] to be an integer equal to or greater than zero. ' + $suffix + ' given');
 					}
 
 				}
