@@ -48,6 +48,8 @@ class puzzlePiece implements puzzlePieceInterface
 
 	public function getCode() { return $this->code; }
 
+	public function getFaceCount() { return $this->faceCount; }
+
 	public function getID() { return substr($this->shape,0,3).$this->bridgeCount.$this->code; }
 
 	public function getPieceType() { return get_class($this); }
