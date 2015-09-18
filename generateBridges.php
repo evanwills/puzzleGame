@@ -123,7 +123,7 @@ function generateBits( $bitLen ) {
 			$mirrorable = 'false';
 		}
 */
-		$tmp = array( 'bridgeCount' => $bridgeCount , 'key' => '' , 'bridges' => $bridges , 'mirrorable' => $mirrorable );
+		$tmp = array( 'bridgeCount' => $bridgeCount , 'code' => '' , 'bridges' => $bridges , 'mirrorable' => $mirrorable );
 		if( !isset($output[$bridgeCount]) ) {
 			$output[$bridgeCount] = array();
 		}
@@ -134,7 +134,7 @@ function generateBits( $bitLen ) {
 		if( $c > 1) {
 			$A = 'a';
 			for( $a = 0 ; $a < $c ; $a += 1 ) {
-				$patterns[$a]['key'] = $A;
+				$patterns[$a]['code'] = $A;
 				$A++;
 			}
 			$output[$bridgeCount] = $patterns;
@@ -166,12 +166,17 @@ function generateBits( $bitLen ) {
 			'"\1"'		// 9
 		),
 		print_r($output,true)
-	).";\n}\n"; echo $php;
-	$json = "[";
+	).";\n}\n";
+	//echo $php;
+	debug($output);
+
+	$json = "\nvar bridgePatterns = [";
+	$php = "\n\tprivate \$bridgePatterns = array(";
 	$sep = '';
 	foreach($output as $bridgeCount => $patterns) {
 		for( $a = 0 ; $a < count($patterns) ; $a += 1 ) {
 			$json .= "$sep\n\t\t{";
+			$json .= "$sep\n\t\tarray(";
 			$innerSep = '';
 			foreach($patterns[$a] as $key => $value ) {
 				if( is_bool($value) ) {
@@ -188,10 +193,15 @@ function generateBits( $bitLen ) {
 					}
 				}
 				$json .= "$innerSep \"$key\": $value";
+				if( !is_numeric($key) ) {
+					$key = "'$key'";
+				}
+				$php .= "$innerSep $key => $value";
 				$innerSep = ',';
 			}
 		$sep = ',';
 		$json .= " }";
+		$json .= " )";
 		}
 	}
 	$json .= "\n\t]\n";
