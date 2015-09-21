@@ -17,7 +17,7 @@ function getMirror(inputFaces, inputMirrorX, inputMirrorY) {
 
 
 	function PuzzlePieceMirror(inputMirrorX, inputMirrorY) {
-	//	static private $singletons = array();
+	//	static private $singletons = [];
 
 		var mirrorXfaces = [],
 			mirrorYfaces = [],
@@ -31,10 +31,10 @@ function getMirror(inputFaces, inputMirrorX, inputMirrorY) {
 				first = null,
 				second = null;
 			if (!Array.prototype.isPrototypeOf(bridges)) {
-				throw new exception('');
+				throw '';
 			}
 			if (!Array.prototype.isPrototypeOf(swapsies)) {
-				throw new exception('');
+				throw '';
 			}
 			for (a = 0; a < swapsies.length; a += 1) {
 				if (swapsies[a][0] === undefined || swapsies[a][1] === undefined) {
@@ -63,42 +63,42 @@ function getMirror(inputFaces, inputMirrorX, inputMirrorY) {
 	}
 
 	if( singletons[inputFaces] === undefined) {
-		$axis = array('X','Y');
-		$which = 'second';
-		for( $a = 0 ; $a < 2 ; $a += 1 ) {
-			$var = 'mirror'.$axis[$a];
-			$suffix = '';
-			if( !is_array($$var) ) {
-				$suffix = gettype($$var);
-			} elseif( count($$var) === 0 ) {
+		var $axis = ['X','Y'];
+		var $which = 'second';
+		for( var $a = 0 ; $a < 2 ; $a += 1 ) {
+			var $var = 'mirror' + $axis[$a];
+			var $suffix = '';
+			if( $var instanceof Array ) {
+				$suffix = typeof $var;
+			} else if( $var.length === 0 ) {
 				$suffix = $$var;
 			}
 			if( $suffix !== '' ) {
-				throw new exception('mirrorPuzzlePiece::getMirror() expects '.$which.' parameter inputMirror'.axis[a].' to be an array with at least one child array.');
+				throw 'mirrorPuzzlePiece::getMirror() expects ' + $which + ' parameter inputMirror' + $axis[$a] + ' to be an array with at least one child array.';
 			}
-			for( $b = 0 ; $b < count($$var) ; $b += 1 ) {
-				$tmp = $$var;
-				$item = $tmp[$b];
-				if( !is_array($item) ) {
-					$suffix = gettype($item).' given';
-				} elseif( count($item) !== 2 ) {
-					$x = count($item);
-					$suffix = 'array has '.$x.' item';
+			for ( var $b in $var ) {
+				var $tmp = $$var;
+				var $item = $tmp[$b];
+				if( $item instanceof Array ) {
+					$suffix = gettype($item) + ' given';
+				} else if( $item.length !== 2 ) {
+					var $x = $item.length;
+					$suffix = 'array has ' + $x + ' item';
 					if( $x > 1 ) {
-						$suffix .= 's';
+						$suffix = $suffix + 's';
 					}
 				}
 				if( $suffix !== '' ) {
-					throw new exception('mirrorPuzzlePiece::getMirror() expects '.$which.' parameter inputMirror'.$axis[$a].'['.$b.'] to be an array with at exactly 2 children. '.$suffix);
+					throw 'mirrorPuzzlePiece::getMirror() expects ' + $which + ' parameter inputMirror' + $axis[$a] + '[' + $b + '] to be an array with at exactly 2 children. ' + $suffix;
 				}
-				for( $c = 0 ; $c < 2 ; $c += 1 ) {
+				for( var $c = 0 ; $c < 2 ; $c += 1 ) {
 					if( !is_int($item[$c]) ) {
 						$suffx = gettype($itme[$c]);
-					} elseif( $item[$c] < 0 ) {
+					} else if( $item[$c] < 0 ) {
 						$suffix = $item[$c];
 					}
 					if( $suffix !== '' ) {
-						throw new exception('mirrorPuzzlePiece::getMirror() expects '.$which.' parameter inputMirror'.$axis[$a].'['.$b.']['.$c.'] to be an integer equal to or greater than zero. '.$suffix.' given');
+						throw 'mirrorPuzzlePiece::getMirror() expects ' + $which + ' parameter inputMirror' + $axis[$a] + '[' + $b + '][' + $c + '] to be an integer equal to or greater than zero. ' + $suffix + ' given';
 					}
 
 				}
